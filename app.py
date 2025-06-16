@@ -23,7 +23,7 @@ if uploaded_aspire and uploaded_safaricom:
         st.subheader("Safaricom File Preview")
         st.dataframe(safaricom.head())
 
-        # Core processing logic (from notebook)
+        # Full notebook logic (unaltered)
         #!/usr/bin/env python
         # coding: utf-8
         
@@ -1121,8 +1121,4 @@ if uploaded_aspire and uploaded_safaricom:
         wb.save(excel_file)
         files.download(excel_file)
         
-
-        # Display final result if available
-        if 'final_output' in locals():
-            st.success("✅ Processing complete.")
-            st.dataframe(final_output)
+        

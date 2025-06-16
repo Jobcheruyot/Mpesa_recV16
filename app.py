@@ -950,6 +950,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         # [REMOVED COLAB DOWNLOAD] files.download('daily_reversals.csv')
         if os.path.exists('daily_reversals.csv'):
             with open('daily_reversals.csv', 'rb') as f:
+                st.download_button('⬇️ Download Daily Reversals', f, file_name='daily_reversals.csv', key='btn_daily_reversals')
 
 
         # ##Generate previous day transactions utilized
@@ -1001,6 +1002,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         # [REMOVED COLAB DOWNLOAD] files.download('Prev_day_utilized.csv')
         if os.path.exists('daily_reversals.csv'):
             with open('daily_reversals.csv', 'rb') as f:
+                st.download_button('⬇️ Download Daily Reversals', f, file_name='daily_reversals.csv', key='btn_daily_reversals')
 
 
         # ##Generate unutilized transactions
@@ -1061,6 +1063,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         # [REMOVED COLAB DOWNLOAD] files.download("Cashed_out.csv")
         if os.path.exists('daily_reversals.csv'):
             with open('daily_reversals.csv', 'rb') as f:
+                st.download_button('⬇️ Download Daily Reversals', f, file_name='daily_reversals.csv', key='btn_daily_reversals')
 
 
         # ##Generate the Daily Summary
@@ -1133,6 +1136,30 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         # [REMOVED COLAB DOWNLOAD] files.download(excel_file)
         if os.path.exists('daily_reversals.csv'):
             with open('daily_reversals.csv', 'rb') as f:
+                st.download_button('⬇️ Download Daily Reversals', f, file_name='daily_reversals.csv', key='btn_daily_reversals')
+
+
+
+                # 🔄 Prepare multi-sheet Excel workbook
+                output_excel = BytesIO()
+                with pd.ExcelWriter(output_excel, engine='xlsxwriter') as writer:
+                    if 'daily_reversals' in locals():
+                        daily_reversals.to_excel(writer, sheet_name='Daily_Reversals', index=False)
+                    if 'utilized' in locals():
+                        utilized.to_excel(writer, sheet_name='Utilized', index=False)
+                    if 'not_utilized' in locals():
+                        not_utilized.to_excel(writer, sheet_name='Not_Utilized', index=False)
+                    if 'final_output' in locals():
+                        final_output.to_excel(writer, sheet_name='Final_Output', index=False)
+                output_excel.seek(0)
+
+                st.download_button(
+                    label="📥 Download All Reports (Excel Workbook)",
+                    data=output_excel,
+                    file_name="mpesa_reconciliation_report.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    key="btn_all_reports"
+                )
 
 
         if 'final_output' in locals():

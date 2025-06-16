@@ -1,8 +1,8 @@
+
 import streamlit as st
 import pandas as pd
 import os
 from io import BytesIO
-
 
 st.set_page_config(page_title="Mpesa Reconciliation App", layout="wide")
 st.title("📊 Mpesa Reconciliation App")
@@ -14,10 +14,7 @@ uploaded_safaricom = st.file_uploader("📁 Upload Safaricom File", type=["csv",
 if uploaded_key and uploaded_aspire and uploaded_safaricom:
     st.success("✅ All files uploaded. Click the button below to start processing.")
 
-    process = st.button("▶️ Start Processing")
-
-    if process:
-        # Load files from uploads only
+    if st.button("▶️ Start Processing"):
         key = pd.read_csv(uploaded_key) if uploaded_key.name.endswith('.csv') else pd.read_excel(uploaded_key)
         aspire = pd.read_csv(uploaded_aspire) if uploaded_aspire.name.endswith('.csv') else pd.read_excel(uploaded_aspire)
         safaricom = pd.read_csv(uploaded_safaricom) if uploaded_safaricom.name.endswith('.csv') else pd.read_excel(uploaded_safaricom)
@@ -29,6 +26,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         st.subheader("📨 Safaricom File Preview")
         st.dataframe(safaricom.head())
 
+        # --- Inserted original notebook logic here ---
        #!/usr/bin/env python
        # coding: utf-8
 
@@ -1151,3 +1149,24 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         if 'final_output' in locals():
             st.success("✅ Processing complete. Final Output:")
             st.dataframe(final_output)
+
+        # 🔄 Prepare Excel workbook with multiple sheets
+        output_excel = BytesIO()
+        with pd.ExcelWriter(output_excel, engine='xlsxwriter') as writer:
+            if 'daily_reversals' in locals():
+                daily_reversals.to_excel(writer, sheet_name='Daily_Reversals', index=False)
+            if 'utilized' in locals():
+                utilized.to_excel(writer, sheet_name='Utilized', index=False)
+            if 'not_utilized' in locals():
+                not_utilized.to_excel(writer, sheet_name='Not_Utilized', index=False)
+            if 'final_output' in locals():
+                final_output.to_excel(writer, sheet_name='Final_Output', index=False)
+        output_excel.seek(0)
+
+        st.download_button(
+            label="📥 Download All Reports (Excel Workbook)",
+            data=output_excel,
+            file_name="mpesa_reconciliation_report.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            key="btn_all_reports"
+        )

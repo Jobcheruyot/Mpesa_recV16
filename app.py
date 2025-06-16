@@ -1128,26 +1128,23 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
             pass
 
 
-        if 'final_output' in locals():
-            st.success("✅ Processing complete. Final Output:")
-            st.dataframe(final_output)
+                # ✅ Final Excel workbook with all 4 structured reports
+                output = BytesIO()
+                with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+                    if 'daily_reversals' in locals():
+                        daily_reversals.to_excel(writer, sheet_name='Daily_Reversals', index=False)
+                    if 'prev_day_utilized' in locals():
+                        prev_day_utilized.to_excel(writer, sheet_name='Prev_Day_Utilized', index=False)
+                    if 'cashed_out' in locals():
+                        cashed_out.to_excel(writer, sheet_name='Unutilized_Transactions', index=False)
+                    if 'store_summary' in locals():
+                        store_summary.to_excel(writer, sheet_name='Summary', index=False)
+                output.seek(0)
 
-        output_excel = BytesIO()
-        with pd.ExcelWriter(output_excel, engine='xlsxwriter') as writer:
-            if 'daily_reversals' in locals():
-                daily_reversals.to_excel(writer, sheet_name='Daily_Reversals', index=False)
-            if 'utilized' in locals():
-                utilized.to_excel(writer, sheet_name='Utilized', index=False)
-            if 'not_utilized' in locals():
-                not_utilized.to_excel(writer, sheet_name='Not_Utilized', index=False)
-            if 'final_output' in locals():
-                final_output.to_excel(writer, sheet_name='Final_Output', index=False)
-        output_excel.seek(0)
-
-        st.download_button(
-            label="📥 Download All Reports (Excel Workbook)",
-            data=output_excel,
-            file_name="mpesa_reconciliation_report.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            key="btn_all_reports"
-        )
+                st.download_button(
+                    label="📥 Download Mpesa Reports (Excel Workbook)",
+                    data=output,
+                    file_name="mpesa_reconciliation_report.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    key="btn_all_reports"
+                )

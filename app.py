@@ -148,7 +148,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         xx_count = (safaricom['code_check'] == 'XX').sum()
 
         # Step 5: Display result
-        print(f"Number of unmatched RECEIPT_NUMBERs marked as 'XX': {xx_count}")
+        st.write(f"Number of unmatched RECEIPT_NUMBERs marked as 'XX': {xx_count}")
         safaricom.head()
 
 

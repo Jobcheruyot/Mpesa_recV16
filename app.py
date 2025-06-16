@@ -26,7 +26,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         st.subheader("📨 Safaricom File Preview")
         st.dataframe(safaricom.head())
 
-        # Full notebook logic (unaltered)
+        # Full notebook logic (unaltered except for colab fix)
         #!/usr/bin/env python
         # coding: utf-8
         
@@ -40,7 +40,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         from openpyxl import Workbook
         from openpyxl.styles import Font
         from openpyxl.utils import get_column_letter
-        from google.colab import files
+        # [REMOVED FOR DEPLOYMENT] from google.colab import files
         import re
         from datetime import datetime
         
@@ -927,7 +927,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         
         
         import pandas as pd
-        from google.colab import files
+        # [REMOVED FOR DEPLOYMENT] from google.colab import files
         
         # Ensure the DEBIT_AMOUNT column is numeric
         safaricom['DEBIT_AMOUNT'] = pd.to_numeric(safaricom['DEBIT_AMOUNT'], errors='coerce')
@@ -954,7 +954,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         
         
         import pandas as pd
-        from google.colab import files
+        # [REMOVED FOR DEPLOYMENT] from google.colab import files
         
         # Step 0: Clean up TRANSACTION_TYPE for prioritization
         aspire['TRANSACTION_TYPE'] = aspire['TRANSACTION_TYPE'].fillna('').astype(str).str.strip()
@@ -1123,7 +1123,6 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         excel_file = "store_summary1.xlsx"
         wb.save(excel_file)
         files.download(excel_file)
-        
         
 
         if 'final_output' in locals():

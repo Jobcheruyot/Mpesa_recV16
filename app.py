@@ -10,9 +10,11 @@ uploaded_aspire = st.file_uploader("📁 Upload Aspire File", type=["csv", "xlsx
 uploaded_safaricom = st.file_uploader("📁 Upload Safaricom File", type=["csv", "xlsx"])
 
 if uploaded_key and uploaded_aspire and uploaded_safaricom:
-    st.success("✅ All files uploaded. Click below to start processing.")
+    st.success("✅ All files uploaded. Click the button below to start processing.")
 
-    if st.button("▶️ Start Processing"):
+    process = st.button("▶️ Start Processing")
+
+    if process:
         key = pd.read_csv(uploaded_key) if uploaded_key.name.endswith('.csv') else pd.read_excel(uploaded_key)
         aspire = pd.read_csv(uploaded_aspire) if uploaded_aspire.name.endswith('.csv') else pd.read_excel(uploaded_aspire)
         safaricom = pd.read_csv(uploaded_safaricom) if uploaded_safaricom.name.endswith('.csv') else pd.read_excel(uploaded_safaricom)

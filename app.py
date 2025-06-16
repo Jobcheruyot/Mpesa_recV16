@@ -27,7 +27,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         st.subheader("📨 Safaricom File Preview")
         st.dataframe(safaricom.head())
 
-        # Inject full notebook logic (Colab removed + /content/ paths disabled)
+        # Inject notebook logic, Colab removed, paths fixed, download added
         #!/usr/bin/env python
         # coding: utf-8
         
@@ -946,7 +946,9 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         daily_reversals.to_csv('daily_reversals.csv', index=False)
         
         # Trigger auto-download (Colab)
-        files.download('daily_reversals.csv')
+        # [REMOVED COLAB DOWNLOAD] files.download('daily_reversals.csv')
+                with open("daily_reversals.csv", "rb") as f:
+                    st.download_button("⬇️ Download Daily Reversals", f, file_name="daily_reversals.csv")
         
         
         # ##Generate previous day transactions utilized
@@ -995,7 +997,9 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         
         # Step 4: Export to CSV and auto-download
         prev_day_utilized.to_csv('Prev_day_utilized.csv', index=False)
-        files.download('Prev_day_utilized.csv')
+        # [REMOVED COLAB DOWNLOAD] files.download('Prev_day_utilized.csv')
+                with open("daily_reversals.csv", "rb") as f:
+                    st.download_button("⬇️ Download Daily Reversals", f, file_name="daily_reversals.csv")
         
         
         # ##Generate unutilized transactions
@@ -1053,7 +1057,9 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         
         # === Step 6: Export CSV ===
         cashed_out.to_csv("Cashed_out.csv", index=False)
-        files.download("Cashed_out.csv")
+        # [REMOVED COLAB DOWNLOAD] files.download("Cashed_out.csv")
+                with open("daily_reversals.csv", "rb") as f:
+                    st.download_button("⬇️ Download Daily Reversals", f, file_name="daily_reversals.csv")
         
         
         # ##Generate the Daily Summary
@@ -1123,7 +1129,9 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         # === Save and Download ===
         excel_file = "store_summary1.xlsx"
         wb.save(excel_file)
-        files.download(excel_file)
+        # [REMOVED COLAB DOWNLOAD] files.download(excel_file)
+                with open("daily_reversals.csv", "rb") as f:
+                    st.download_button("⬇️ Download Daily Reversals", f, file_name="daily_reversals.csv")
         
 
         if 'final_output' in locals():

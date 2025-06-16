@@ -1131,13 +1131,15 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
 
         output = BytesIO()
         with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-            if 'daily_reversals' in locals():
+        output = BytesIO()
+        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+            if isinstance(daily_reversals, pd.DataFrame):
                 daily_reversals.to_excel(writer, sheet_name='Daily_Reversals', index=False)
-            if 'prev_day_utilized' in locals():
+            if isinstance(prev_day_utilized, pd.DataFrame):
                 prev_day_utilized.to_excel(writer, sheet_name='Prev_Day_Utilized', index=False)
-            if 'cashed_out' in locals():
+            if isinstance(cashed_out, pd.DataFrame):
                 cashed_out.to_excel(writer, sheet_name='Unutilized_Transactions', index=False)
-            if 'store_summary' in locals():
+            if isinstance(store_summary, pd.DataFrame):
                 store_summary.to_excel(writer, sheet_name='Summary', index=False)
         output.seek(0)
 

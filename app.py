@@ -2,25 +2,26 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Mpesa Reconciliation", layout="wide")
+st.set_page_config(page_title="Mpesa Reconciliation App", layout="wide")
 st.title("📊 Mpesa Reconciliation App")
 
-uploaded_aspire = st.file_uploader("Upload Aspire File", type=["csv", "xlsx"])
-uploaded_safaricom = st.file_uploader("Upload Safaricom File", type=["csv", "xlsx"])
+uploaded_key = st.file_uploader("🔑 Upload Key File", type=["csv", "xlsx"])
+uploaded_aspire = st.file_uploader("📁 Upload Aspire File", type=["csv", "xlsx"])
+uploaded_safaricom = st.file_uploader("📁 Upload Safaricom File", type=["csv", "xlsx"])
 
-if uploaded_aspire and uploaded_safaricom:
-    st.success("✅ Files uploaded successfully. Click below to start processing.")
+if uploaded_key and uploaded_aspire and uploaded_safaricom:
+    st.success("✅ All files uploaded. Click below to start processing.")
 
-    if st.button("Start Processing"):
-        # Load files
+    if st.button("▶️ Start Processing"):
+        key = pd.read_csv(uploaded_key) if uploaded_key.name.endswith('.csv') else pd.read_excel(uploaded_key)
         aspire = pd.read_csv(uploaded_aspire) if uploaded_aspire.name.endswith('.csv') else pd.read_excel(uploaded_aspire)
         safaricom = pd.read_csv(uploaded_safaricom) if uploaded_safaricom.name.endswith('.csv') else pd.read_excel(uploaded_safaricom)
 
-        # Display preview
-        st.subheader("Aspire File Preview")
+        st.subheader("🔍 Key File Preview")
+        st.dataframe(key.head())
+        st.subheader("🧾 Aspire File Preview")
         st.dataframe(aspire.head())
-
-        st.subheader("Safaricom File Preview")
+        st.subheader("📨 Safaricom File Preview")
         st.dataframe(safaricom.head())
 
         # Full notebook logic (unaltered)
@@ -1122,3 +1123,7 @@ if uploaded_aspire and uploaded_safaricom:
         files.download(excel_file)
         
         
+
+        if 'final_output' in locals():
+            st.success("✅ Processing complete. Final Output:")
+            st.dataframe(final_output)

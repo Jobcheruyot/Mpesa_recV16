@@ -15,6 +15,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
     process = st.button("▶️ Start Processing")
 
     if process:
+        # Load files from uploads only
         key = pd.read_csv(uploaded_key) if uploaded_key.name.endswith('.csv') else pd.read_excel(uploaded_key)
         aspire = pd.read_csv(uploaded_aspire) if uploaded_aspire.name.endswith('.csv') else pd.read_excel(uploaded_aspire)
         safaricom = pd.read_csv(uploaded_safaricom) if uploaded_safaricom.name.endswith('.csv') else pd.read_excel(uploaded_safaricom)
@@ -26,7 +27,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         st.subheader("📨 Safaricom File Preview")
         st.dataframe(safaricom.head())
 
-        # Full notebook logic (unaltered except for colab fix)
+        # Inject full notebook logic (Colab removed + /content/ paths disabled)
         #!/usr/bin/env python
         # coding: utf-8
         
@@ -49,10 +50,10 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         
         
         # Load CSV and Excel files
-        aspire = pd.read_csv('/content/MPESA_TRNS_2025-06-11.csv')
-        safaricom = pd.read_csv('/content/Mpesa_852182_20250611235959.csv')
-        key = pd.read_excel('/content/key.xlsx')
-        key = pd.read_excel('/content/key.xlsx')
+        # [REMOVED FOR DEPLOYMENT] aspire = pd.read_csv('/content/MPESA_TRNS_2025-06-11.csv')
+        # [REMOVED FOR DEPLOYMENT] safaricom = pd.read_csv('/content/Mpesa_852182_20250611235959.csv')
+        # [REMOVED FOR DEPLOYMENT] key = pd.read_excel('/content/key.xlsx')
+        # [REMOVED FOR DEPLOYMENT] key = pd.read_excel('/content/key.xlsx')
         
         # Preview
         aspire.head()
@@ -282,7 +283,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         
         
         # Load key.xlsx and rename columns properly
-        key = pd.read_excel('/content/key.xlsx', header=None)
+        # [REMOVED FOR DEPLOYMENT] key = pd.read_excel('/content/key.xlsx', header=None)
         key.columns = ['TRANSACTION_TYPE', 'Summary_type']
         
         
@@ -292,7 +293,7 @@ if uploaded_key and uploaded_aspire and uploaded_safaricom:
         
         
         # Load key file and drop rows with empty or invalid TRANSACTION_TYPE
-        key = pd.read_excel('/content/key.xlsx', header=None)
+        # [REMOVED FOR DEPLOYMENT] key = pd.read_excel('/content/key.xlsx', header=None)
         key.columns = ['TRANSACTION_TYPE', 'Summary_type']
         
         # Drop rows where TRANSACTION_TYPE is null or in the list of irrelevant values
